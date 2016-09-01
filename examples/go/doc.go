@@ -68,6 +68,9 @@ Example usage:
 		// Submit timing information
 		duration := int64(t2.Sub(t1) / time.Millisecond)
 		client.Timing("stat.timer", duration)
+
+		// Set a gauge value
+		client.Gauge("stat.gauge", 42)
 	}
 
 */

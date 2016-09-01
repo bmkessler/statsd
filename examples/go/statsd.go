@@ -144,6 +144,19 @@ func (client *StatsdClient) DecrementWithSampling(stat string, sampleRate float3
 	client.UpdateStats(stats[:], -1, sampleRate)
 }
 
+// Updates one stat gauge
+//
+// Usage:
+//
+//     import "statsd"
+//     client := statsd.New('localhost', 8125)
+//     client.Gauge('foo.bar', 5)
+func (c *StatsdClient) Gauge(stat string, val int) {
+	updateString := fmt.Sprintf("%d|g", val)
+	stats := map[string]string{stat: updateString}
+	c.Send(stats, 1)
+}
+
 // Arbitrarily updates a list of stats by a delta
 func (client *StatsdClient) UpdateStats(stats []string, delta int, sampleRate float32) {
 	statsToSend := make(map[string]string)
